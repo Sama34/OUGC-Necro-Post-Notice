@@ -1,28 +1,31 @@
 <?php
 
-/*
- * OUGC Necro Post Notice plugin
- * Author: Omar Gonzalez.
- * Copyright: © 2012 Omar Gonzalez, All Rights Reserved
- * 
- * Website: http://www.udezain.com.ar
+/***************************************************************************
  *
- * Show a alert bar when replying to old threads.
+ *   OUGC Necro Post plugin (/inc/languages/english/ougc_necro_notice.lang.php)
+ *	 Author: Omar Gonzalez
+ *   Copyright: © 2012 Omar Gonzalez
+ *   
+ *   Website: http://community.mybb.com/user-25096.html
  *
-************************************************************/
-
-/*
- * This plugin is under uDezain free plugins license. In short:
- * ============================================================
- * 1.- You may edit whatever you want to fit your needs without premission.
- * 2.- You MUST NOT redistribute this or any modified version of this plugin by any means without the author written permission.
- * 3.- You MUST NOT remove any license comments in any file that comes with this plugin pack.
+ *   Show a alert bar when replying to old threads.
  *
- * By downloading / installing / using this plugin you accept these conditions and the full attached license.
- * If no license file was attached within this plugin pack, you can read it in the following places:
- * 	1.- http://www.udezain.com.ar/eula-free.txt
- * 	2.- http://www.udezain.com.ar/eula-free.php
-************************************************************/
+ ***************************************************************************
+ 
+****************************************************************************
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
 
 $l['ougc_necro_notice'] = 'OUGC Necro Post Notice';
 $l['ougc_necro_notice_alert'] = 'This thread laspost was made {1} {2} ago. Please only reply if you have a good reason to.';
