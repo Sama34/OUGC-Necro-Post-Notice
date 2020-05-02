@@ -88,19 +88,19 @@ function ougc_necro_notice_activate()
 		'time'	=> array(
 			'title'			=> $lang->ougc_necro_notice_time,
 			'description'	=> $lang->ougc_necro_notice_time_d,
-			'optionscode'	=> 'text',
+			'optionscode'	=> 'numeric',
 			'value'			=> 30,
 		),
 		'forums'	=> array(
 			'title'			=> $lang->ougc_necro_notice_forums,
 			'description'	=> $lang->ougc_necro_notice_forums_d,
-			'optionscode'	=> 'text',
+			'optionscode'	=> 'forumselect',
 			'value'			=> '',
 		),
 		'groups'	=> array(
 			'title'			=> $lang->ougc_necro_notice_groups,
 			'description'	=> $lang->ougc_necro_notice_groups_d,
-			'optionscode'	=> 'text',
+			'optionscode'	=> 'groupselect',
 			'value'			=> '',
 		),
 		'page'	=> array(
@@ -142,7 +142,7 @@ both='.$lang->ougc_necro_notice_page_both,
 	/*~*~* RUN UPDATES END *~*~*/
 
 	$plugins['necro_notice'] = $info['versioncode'];
-	$cache->update('ougc_plugins', $plugins);s
+	$cache->update('ougc_plugins', $plugins);
 }
 
 //Deactivate the plugin.
@@ -174,7 +174,7 @@ function ougc_necro_notice_install()
 // _uninstall routine
 function ougc_necro_notice_uninstall()
 {
-	global $PL;
+	global $PL, $cache;
 	ougc_necro_notice_pl_req();
 
 	// Delete settings
@@ -186,9 +186,9 @@ function ougc_necro_notice_uninstall()
 	// Delete version from cache
 	$plugins = (array)$cache->read('ougc_plugins');
 
-	if(isset($plugins['ougc_necro_notice']))
+	if(isset($plugins['necro_notice']))
 	{
-		unset($plugins['ougc_necro_notice']);
+		unset($plugins['necro_notice']);
 	}
 
 	if(!empty($plugins))
@@ -248,23 +248,12 @@ function ougc_necro_notice()
 		return;
 	}
 
-	if(!empty($settings['ougc_necro_notice_forums']))
+	if(
+		is_member($settings['ougc_necro_notice_groups']) ||
+		is_member($settings['ougc_necro_notice_forums'], array('usergroup' => $thread['fid']))
+	)
 	{
-		if(in_array($thread['fid'], array_unique(array_map('intval', explode(',', $settings['ougc_necro_notice_forums'])))))
-		{
-			return;
-		}
-	}
-
-	global $PL;
-	$PL or require_once PLUGINLIBRARY;
-
-	if(!empty($settings['ougc_necro_notice_groups']))
-	{
-		if((bool)$PL->is_member($settings['ougc_necro_notice_groups']))
-		{
-			return;
-		}
+		return;
 	}
 
 	global $thread;
