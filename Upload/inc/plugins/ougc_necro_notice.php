@@ -71,6 +71,7 @@ function ougc_necro_notice_info()
 		'version'		=> '1.8.20',
 		'versioncode'	=> 1820,
 		'compatibility'	=> '18*',
+		'codename'		=> 'ougc_necro_notice',
 		'pl_url'		=> 'https://community.mybb.com/mods.php?action=view&pid=573',
 		'pl_version'	=> 13,
 	);
