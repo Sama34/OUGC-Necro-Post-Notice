@@ -2,13 +2,13 @@
 
 /***************************************************************************
  *
- *   OUGC Necro Post plugin (/inc/plugins/ougc_necro_notice.php)
- *	 Author: Omar Gonzalez
- *   Copyright: © 2012 Omar Gonzalez
- *   
- *   Website: http://community.mybb.com/user-25096.html
+ *	OUGC Pages plugin (/inc/plugins/ougc_necro_notice.php)
+ *	Author: Omar Gonzalez
+ *	Copyright: Â© 2012 - 2020 Omar Gonzalez
  *
- *   Show a alert bar when replying to old threads.
+ *	Website: https://ougc.network
+ *
+ *	Show a alert bar when replying to old threads.
  *
  ***************************************************************************
  
@@ -17,12 +17,12 @@
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
-	
+
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-	
+
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
@@ -65,21 +65,21 @@ function ougc_necro_notice_info()
 	return array(
 		'name'			=> 'OUGC Necro Post Notice',
 		'description'	=> $lang->ougc_necro_notice_d,
-		'website'		=> 'http://mods.mybb.com/view/ougc-necro-post-notice',
+		'website'		=> 'https://ougc.network',
 		'author'		=> 'Omar G.',
-		'authorsite'	=> 'http://community.mybb.com/user-25096.html',
-		'version'		=> '1.1',
-		'guid'			=> 'f2e864384ac2a13e3511684aed51c754',
-		'compatibility'	=> '16*',
-		'pl_url'		=> 'http://mods.mybb.com/view/pluginlibrary',
-		'pl_version'	=> 11,
+		'authorsite'	=> 'https://ougc.network',
+		'version'		=> '1.8.20',
+		'versioncode'	=> 1820,
+		'compatibility'	=> '18*',
+		'pl_url'		=> 'https://community.mybb.com/mods.php?action=view&pid=573',
+		'pl_version'	=> 13,
 	);
 }
 
 //Activate the plugin.
 function ougc_necro_notice_activate()
 {
-	global $PL, $lang;
+	global $PL, $lang, $cache;
 	ougc_necro_notice_pl_req();
 
 	// Add our settings
@@ -121,6 +121,27 @@ both='.$lang->ougc_necro_notice_page_both,
 	require_once MYBB_ROOT.'/inc/adminfunctions_templates.php';
 	find_replace_templatesets('showthread_quickreply', '#'.preg_quote('<f').'#', '{$thread[\'necro_notice\']}<f');
 	find_replace_templatesets('newreply', '#'.preg_quote('{$reply_errors}').'#', '{$thread[\'necro_notice\']}{$reply_errors}');
+
+	// Insert/update version into cache
+	$plugins = $cache->read('ougc_plugins');
+	if(!$plugins)
+	{
+		$plugins = array();
+	}
+
+	$info = ougc_necro_notice_info();
+
+	if(!isset($plugins['necro_notice']))
+	{
+		$plugins['necro_notice'] = $info['versioncode'];
+	}
+
+	/*~*~* RUN UPDATES START *~*~*/
+
+	/*~*~* RUN UPDATES END *~*~*/
+
+	$plugins['necro_notice'] = $info['versioncode'];
+	$cache->update('ougc_plugins', $plugins);s
 }
 
 //Deactivate the plugin.
@@ -136,9 +157,11 @@ function ougc_necro_notice_deactivate()
 // _is_installed routine
 function ougc_necro_notice_is_installed()
 {
-	global $db;
+	global $cache;
 
-	return (bool)$db->fetch_field($db->simple_select('settinggroups', 'gid', 'name="ougc_necro_notice"'), 'gid');
+	$plugins = $cache->read('ougc_plugins');
+
+	return isset($plugins['necro_notice']);
 }
 
 // _install routine
@@ -158,6 +181,23 @@ function ougc_necro_notice_uninstall()
 
 	// Delete template/group
 	$PL->templates_delete('ougcnecronotice');
+
+	// Delete version from cache
+	$plugins = (array)$cache->read('ougc_plugins');
+
+	if(isset($plugins['ougc_necro_notice']))
+	{
+		unset($plugins['ougc_necro_notice']);
+	}
+
+	if(!empty($plugins))
+	{
+		$cache->update('ougc_plugins', $plugins);
+	}
+	else
+	{
+		$PL->cache_delete('ougc_plugins');
+	}
 }
 
 // PluginLibrary dependency check

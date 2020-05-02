@@ -2,7 +2,7 @@
 
 /***************************************************************************
  *
- *	OUGC Pages plugin (/inc/languages/english/ougc_necro_notice.lang.php)
+ *	OUGC Pages plugin (/inc/languages/espanol/ougc_necro_notice.lang.php)
  *	Author: Omar Gonzalez
  *	Copyright: © 2012 - 2020 Omar Gonzalez
  *
@@ -28,6 +28,6 @@
 ****************************************************************************/
 
 $l['ougc_necro_notice'] = 'OUGC Necro Post Notice';
-$l['ougc_necro_notice_alert'] = 'This thread laspost was made {1} {2} ago. Please only reply if you have a good reason to.';
-$l['ougc_necro_notice_day'] = ' day';
-$l['ougc_necro_notice_days'] = ' days';
+$l['ougc_necro_notice_alert'] = 'El ultimo mensaje en este tema fue publicado hace {1} {2}. Por favor asegurate de responder solamente si existe una buena razon para hacerlo.';
+$l['ougc_necro_notice_day'] = ' dia';
+$l['ougc_necro_notice_days'] = ' dias';
